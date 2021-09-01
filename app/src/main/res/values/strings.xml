@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">SunnyWeather</string>
     <string name="ContentDescription">null</string>
-    <string name="searchPlace_hint">输入城市</string>
+    <string name="searchPlace_hint">输入地址</string>
     <string name="cannotSearchTip">未能查询到任何信息</string>
+    <string name="forecast">预报</string>
+    <string name="lifeIndex">生活指数</string>
+    <string name="cold">感冒</string>
+    <string name="dressing">穿衣</string>
+    <string name="ultraviolet">实时紫外线</string>
+    <string name="carWashing">洗车</string>
 </resources>
