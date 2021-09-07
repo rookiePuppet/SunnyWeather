@@ -12,10 +12,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sunnyweather.android.R
 import com.sunnyweather.android.logic.model.Weather
 import com.sunnyweather.android.logic.model.getSky
+import com.sunnyweather.android.ui.place.ForecastAdapter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,19 +30,34 @@ class WeatherActivity : AppCompatActivity() {
     private lateinit var currentSky: TextView
     private lateinit var currentAQI: TextView
     private lateinit var nowLayout: ConstraintLayout
-    private lateinit var forecastLayout: LinearLayout
+    private lateinit var forecastRecyclerView: RecyclerView
+    private lateinit var tempRangeText: TextView
     private lateinit var coldRiskText: TextView
     private lateinit var dressingText: TextView
     private lateinit var ultravioletText: TextView
     private lateinit var carWashingText: TextView
+    private lateinit var visibilityText: TextView
+    private lateinit var apparentTempText: TextView
+    private lateinit var humidityText: TextView
+    private lateinit var windText: TextView
     private lateinit var weatherLayout: ScrollView
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var navBtn: Button
     lateinit var drawerLayout: DrawerLayout
 
+    private lateinit var aqiText: TextView
+    private lateinit var aqiDescriptionText: TextView
+    private lateinit var pm25Text: TextView
+    private lateinit var pm10Text: TextView
+    private lateinit var o3Text: TextView
+    private lateinit var so2Text: TextView
+    private lateinit var no2Text: TextView
+    private lateinit var coText: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val decorView = window.decorView
+        decorView.fitsSystemWindows = true
         decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         window.statusBarColor = Color.TRANSPARENT
@@ -50,15 +68,31 @@ class WeatherActivity : AppCompatActivity() {
         currentSky = findViewById(R.id.currentSky)
         currentAQI = findViewById(R.id.currentAQI)
         nowLayout = findViewById(R.id.nowLayout)
-        forecastLayout = findViewById(R.id.forecastLayout)
-        coldRiskText = findViewById(R.id.coldRiskText)
-        dressingText = findViewById(R.id.dressingText)
-        ultravioletText = findViewById(R.id.ultravioletText)
-        carWashingText = findViewById(R.id.carWashingText)
+        forecastRecyclerView = findViewById(R.id.forecastRecyclerView)
         weatherLayout = findViewById(R.id.weatherLayout)
         swipeRefresh = findViewById(R.id.swipeRefresh)
         navBtn = findViewById(R.id.navBtn)
         drawerLayout = findViewById(R.id.drawerLayout)
+        tempRangeText = findViewById(R.id.tempRangeText)
+        //生活指数
+        coldRiskText = findViewById(R.id.coldRiskText)
+        dressingText = findViewById(R.id.dressingText)
+        ultravioletText = findViewById(R.id.ultravioletText)
+        carWashingText = findViewById(R.id.carWashingText)
+        visibilityText = findViewById(R.id.visibilityText)
+        apparentTempText = findViewById(R.id.apparentTempText)
+        humidityText = findViewById(R.id.humidityText)
+        windText = findViewById(R.id.windText)
+
+        aqiText = findViewById(R.id.aqiText)
+        aqiDescriptionText = findViewById(R.id.aqiDescription)
+        pm25Text = findViewById(R.id.pm25Text)
+        pm10Text = findViewById(R.id.pm10Text)
+        o3Text = findViewById(R.id.o3Text)
+        so2Text = findViewById(R.id.so2Text)
+        no2Text = findViewById(R.id.no2Text)
+        coText = findViewById(R.id.coText)
+
 
         if (viewModel.locationLng.isEmpty()) {
             viewModel.locationLng = intent.getStringExtra("location_lng") ?: ""
@@ -94,7 +128,6 @@ class WeatherActivity : AppCompatActivity() {
                 manager.hideSoftInputFromWindow(drawerView.windowToken,
                 InputMethodManager.HIDE_NOT_ALWAYS)
             }
-
         })
         swipeRefresh.setColorSchemeResources(R.color.design_default_color_primary)
         refreshWeather()
@@ -114,14 +147,38 @@ class WeatherActivity : AppCompatActivity() {
         val realtime = weather.realtime
         val daily = weather.daily
         //填充now.xml布局中的数据
-        val currentTempText = "${realtime.temperature.toInt()} ℃"
+        val currentTempText = "${realtime.temperature.toInt()}"
         currentTemp.text = currentTempText
+        val maxTemp = "${daily.temperature[0].max.toInt()}"
+        val minTemp = "${daily.temperature[0].min.toInt()}"
+        tempRangeText.text = "$maxTemp℃ / $minTemp℃"
         currentSky.text = getSky(realtime.skycon).info
-        val currentPM25Text = "空气指数 ${realtime.airQuality.aqi.chn.toInt()}"
-        currentAQI.text = currentPM25Text
+        currentAQI.text = "空气${realtime.airQuality.description.chn}"
         nowLayout.setBackgroundResource(getSky(realtime.skycon).bg)
+        //填充air_quality.xml布局中的数据
+        val aqi = realtime.airQuality.aqi.chn.toInt()
+        val aqiDescription = realtime.airQuality.description.chn
+        val pm25 = realtime.airQuality.pm25
+        val pm10 = realtime.airQuality.pm10
+        val o3 = realtime.airQuality.o3
+        val so2 = realtime.airQuality.so2
+        val no2 = realtime.airQuality.no2
+        val co = realtime.airQuality.co
+        aqiText.text = aqi.toString()
+        aqiDescriptionText.text = aqiDescription
+        pm25Text.text = pm25.toString()
+        pm10Text.text = pm10.toString()
+        o3Text.text = o3.toString()
+        so2Text.text = so2.toString()
+        no2Text.text = no2.toString()
+        coText.text = co.toString()
         //填充forecast.xml布局中的数据
-        forecastLayout.removeAllViews()
+        val adapter = ForecastAdapter(daily)
+        forecastRecyclerView.adapter = adapter
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        forecastRecyclerView.layoutManager = layoutManager
+        /*forecastLayout.removeAllViews()
         val days = daily.skycon.size
         for (i in 0 until days) {
             val skycon = daily.skycon[i]
@@ -140,13 +197,18 @@ class WeatherActivity : AppCompatActivity() {
             val tempText = "${temperature.min.toInt()} ~ ${temperature.max.toInt()} ℃"
             temperatureInfo.text = tempText
             forecastLayout.addView(view)
-        }
+        }*/
         //填充life_index.xml布局中的数据
         val lifeIndex = daily.lifeIndex
         coldRiskText.text = lifeIndex.coldRisk[0].desc
         dressingText.text = lifeIndex.dressing[0].desc
         ultravioletText.text = lifeIndex.ultraviolet[0].desc
         carWashingText.text = lifeIndex.carWashing[0].desc
+
+        visibilityText.text = realtime.visibility.toInt().toString()
+        apparentTempText.text = "${realtime.visibility.toInt()}℃"
+        humidityText.text = "${(realtime.humidity*100).toInt()}%"
+        windText.text = "null"
         weatherLayout.visibility = View.VISIBLE
     }
 

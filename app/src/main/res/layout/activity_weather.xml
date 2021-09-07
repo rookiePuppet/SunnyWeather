@@ -25,6 +25,8 @@
 
                 <include layout="@layout/now" />
 
+                <include layout="@layout/air_quality" />
+
                 <include layout="@layout/forecast" />
 
                 <include layout="@layout/life_index" />
@@ -39,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:layout_marginStart="20dp"
         android:background="@color/design_default_color_primary"
         android:clickable="true"
         android:focusable="true"
