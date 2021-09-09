@@ -1,26 +1,25 @@
 package com.sunnyweather.android.ui.weather
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sunnyweather.android.R
+import com.sunnyweather.android.logic.dao.PlaceDao
 import com.sunnyweather.android.logic.model.Weather
 import com.sunnyweather.android.logic.model.getSky
-import com.sunnyweather.android.ui.place.ForecastAdapter
-import java.text.SimpleDateFormat
-import java.util.*
+import com.sunnyweather.android.ui.place.PlaceManageActivity
 
 class WeatherActivity : AppCompatActivity() {
 
@@ -93,7 +92,6 @@ class WeatherActivity : AppCompatActivity() {
         no2Text = findViewById(R.id.no2Text)
         coText = findViewById(R.id.coText)
 
-
         if (viewModel.locationLng.isEmpty()) {
             viewModel.locationLng = intent.getStringExtra("location_lng") ?: ""
         }
@@ -114,7 +112,8 @@ class WeatherActivity : AppCompatActivity() {
             swipeRefresh.isRefreshing = false
         }
         navBtn.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
+            val intent = Intent(this, PlaceManageActivity::class.java)
+            startActivity(intent)
         }
         drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
@@ -178,33 +177,12 @@ class WeatherActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         forecastRecyclerView.layoutManager = layoutManager
-        /*forecastLayout.removeAllViews()
-        val days = daily.skycon.size
-        for (i in 0 until days) {
-            val skycon = daily.skycon[i]
-            val temperature = daily.temperature[i]
-            val view = LayoutInflater.from(this).inflate(R.layout.forecast_item,
-                forecastLayout, false)
-            val dateInfo = view.findViewById<TextView>(R.id.dateInfo)
-            val skyIcon = view.findViewById<ImageView>(R.id.skyIcon)
-            val skyInfo = view.findViewById<TextView>(R.id.skyInfo)
-            val temperatureInfo = view.findViewById<TextView>(R.id.temperatureInfo)
-            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            dateInfo.text = simpleDateFormat.format(skycon.date)
-            val sky = getSky(skycon.value)
-            skyIcon.setImageResource(sky.icon)
-            skyInfo.text = sky.info
-            val tempText = "${temperature.min.toInt()} ~ ${temperature.max.toInt()} ℃"
-            temperatureInfo.text = tempText
-            forecastLayout.addView(view)
-        }*/
         //填充life_index.xml布局中的数据
         val lifeIndex = daily.lifeIndex
         coldRiskText.text = lifeIndex.coldRisk[0].desc
         dressingText.text = lifeIndex.dressing[0].desc
         ultravioletText.text = lifeIndex.ultraviolet[0].desc
         carWashingText.text = lifeIndex.carWashing[0].desc
-
         visibilityText.text = realtime.visibility.toInt().toString()
         apparentTempText.text = "${realtime.visibility.toInt()}℃"
         humidityText.text = "${(realtime.humidity*100).toInt()}%"

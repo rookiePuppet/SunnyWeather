@@ -1,4 +1,4 @@
-package com.sunnyweather.android.ui.place
+package com.sunnyweather.android.ui.weather
 
 import android.view.LayoutInflater
 import android.view.View

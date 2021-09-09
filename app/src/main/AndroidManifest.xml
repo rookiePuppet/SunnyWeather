@@ -13,10 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SunnyWeather">
         <activity
-            android:name=".ui.weather.WeatherActivity"
+            android:name=".ui.place.PlaceEditActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.place.PlaceManageActivity"
+            android:exported="true"
+            android:label="管理城市" />
+        <activity
+            android:name=".ui.weather.WeatherActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
