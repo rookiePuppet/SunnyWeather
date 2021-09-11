@@ -17,7 +17,15 @@ object Repository {
 
     fun getSavedPlace() = PlaceDao.getSavedPlace()
 
+    fun getSavedPlace(index: Int) = PlaceDao.getSavedPlace(index)
+
+    fun getSavedPlaceNum() = PlaceDao.getSavedPlaceNum()
+
     fun isPlaceSaved() = PlaceDao.isPlaceSaved()
+
+    fun deletePlace(placeName: String) = PlaceDao.deletePlace(placeName)
+
+    fun clearPlace() = PlaceDao.clearPlace()
 
     fun searchPlaces(query: String) = fire(Dispatchers.IO) {
         val placeResponse = SunnyWeatherNetwork.searchPlaces(query)

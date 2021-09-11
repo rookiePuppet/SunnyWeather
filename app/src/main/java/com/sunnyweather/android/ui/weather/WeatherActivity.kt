@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sunnyweather.android.R
+import com.sunnyweather.android.logic.Repository
 import com.sunnyweather.android.logic.dao.PlaceDao
 import com.sunnyweather.android.logic.model.Weather
 import com.sunnyweather.android.logic.model.getSky

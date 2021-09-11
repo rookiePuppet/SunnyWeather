@@ -1,7 +1,6 @@
 package com.sunnyweather.android.logic.dao
 
 import android.content.Context
-import android.util.Log
 import androidx.core.content.edit
 import com.google.gson.Gson
 import com.sunnyweather.android.SunnyWeatherApplication
@@ -15,7 +14,15 @@ object PlaceDao {
         }
     }
 
-    fun getSavedPlace(): List<Place> {
+    fun clearPlace() {
+        if (isPlaceSaved()) {
+            sharedPreferences().edit().clear().apply()
+        }
+    }
+
+    fun getSavedPlaceNum(): Int = sharedPreferences().all.size
+
+    fun getSavedPlace(): ArrayList<Place> {
         val placeList = ArrayList<Place>()
         val placeJson = sharedPreferences().all
         placeJson.entries.forEach {
@@ -23,6 +30,11 @@ object PlaceDao {
             placeList.add(place)
         }
         return placeList
+    }
+
+    fun getSavedPlace(index: Int): Place {
+        val placeJson = sharedPreferences().all.toList()
+        return Gson().fromJson(placeJson[index].toString(), Place::class.java)
     }
 
     fun isPlaceSaved() = sharedPreferences().all.isNotEmpty()
