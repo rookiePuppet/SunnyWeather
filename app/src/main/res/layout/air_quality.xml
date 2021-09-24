@@ -190,31 +190,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3">
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.5090909" />
-
-                <TextView
-                    android:id="@+id/aqiDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:textSize="15sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/guideline7"
-                    app:layout_constraintTop_toTopOf="@+id/guideline11" />
-
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:src="@drawable/ic_equalizer"
                     app:layout_constraintBottom_toTopOf="@+id/guideline11"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/ic_baseline_equalizer_24" />
+                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
                     android:id="@+id/textView8"
@@ -230,16 +214,40 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/aqiText"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="3dp"
-                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline7"
-                    app:layout_constraintTop_toTopOf="@+id/guideline11" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+                    <TextView
+                        android:id="@+id/aqiText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="3dp"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/aqiDescription"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/guideline11"
+                        app:layout_constraintVertical_bias="0.666" />
+
+                    <TextView
+                        android:id="@+id/aqiDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/guideline11"
+                        app:layout_constraintVertical_bias="0.666"
+                        tools:layout_editor_absoluteX="3dp" />
+                </LinearLayout>
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline10"

@@ -1,10 +1,17 @@
 package com.sunnyweather.android.logic
 
+import android.annotation.SuppressLint
+import android.content.ContentValues
 import androidx.lifecycle.liveData
+import com.sunnyweather.android.SunnyWeatherApplication
+import com.sunnyweather.android.logic.dao.DiaryDao
 import com.sunnyweather.android.logic.dao.PlaceDao
+import com.sunnyweather.android.logic.model.Diary
 import com.sunnyweather.android.logic.model.Place
+import com.sunnyweather.android.logic.model.Places
 import com.sunnyweather.android.logic.model.Weather
 import com.sunnyweather.android.logic.network.SunnyWeatherNetwork
+import com.sunnyweather.android.ui.diary.DiaryEditActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -13,19 +20,25 @@ import kotlin.coroutines.CoroutineContext
 
 object Repository {
 
-    fun savePlace(place: Place) = PlaceDao.savePlace(place)
+    /*Diary*/
+    fun saveDiary(diary: Diary) = DiaryDao.saveDiary(diary)
 
-    fun getSavedPlace() = PlaceDao.getSavedPlace()
+    fun searchDiary(titleText: String) = DiaryDao.searchDiary(titleText)
 
-    fun getSavedPlace(index: Int) = PlaceDao.getSavedPlace(index)
+    fun updateDiary(diary: Diary) = DiaryDao.updateDiary(diary)
 
-    fun getSavedPlaceNum() = PlaceDao.getSavedPlaceNum()
+    fun deleteDiary(date: String) = DiaryDao.deleteDiary(date)
 
-    fun isPlaceSaved() = PlaceDao.isPlaceSaved()
+    fun getSavedDiary(): ArrayList<Diary> = DiaryDao.getSavedDiary()
+
+    /*Place*/
+    fun savePlace(place: Places) = PlaceDao.savePlace(place)
+
+    fun isPlaceSaved(place: Places) = PlaceDao.isPlaceSaved(place)
+
+    fun getSavePlace() = PlaceDao.getSavedPlace()
 
     fun deletePlace(placeName: String) = PlaceDao.deletePlace(placeName)
-
-    fun clearPlace() = PlaceDao.clearPlace()
 
     fun searchPlaces(query: String) = fire(Dispatchers.IO) {
         val placeResponse = SunnyWeatherNetwork.searchPlaces(query)
@@ -37,6 +50,7 @@ object Repository {
         }
     }
 
+    /*Weather*/
     fun refreshWeather(lng: String, lat: String) = fire(Dispatchers.IO) {
         coroutineScope {
             val deferredRealtime = async {

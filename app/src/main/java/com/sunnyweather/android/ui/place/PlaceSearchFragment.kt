@@ -16,7 +16,7 @@ import com.sunnyweather.android.R
 
 class PlaceSearchFragment : Fragment() {
 
-    val placeSearchViewModel by lazy { ViewModelProvider(this).get(PlaceSearchViewModel::class.java) }
+    private val placeSearchViewModel by lazy { ViewModelProvider(this).get(PlaceSearchViewModel::class.java) }
 
     val placeSavedViewModel: PlaceSavedViewModel by activityViewModels()
 
@@ -67,7 +67,6 @@ class PlaceSearchFragment : Fragment() {
                 result.exceptionOrNull()?.printStackTrace()
             }
         }
-
 
     }
 

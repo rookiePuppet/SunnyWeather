@@ -1,12 +1,13 @@
 package com.sunnyweather.android.ui.place
 
-import android.app.DownloadManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.sunnyweather.android.SunnyWeatherApplication
 import com.sunnyweather.android.logic.Repository
-import com.sunnyweather.android.logic.dao.PlaceDao
 import com.sunnyweather.android.logic.model.Place
+import com.sunnyweather.android.logic.model.Places
+import com.sunnyweather.android.logic.network.SunnyWeatherNetwork
 
 class PlaceSearchViewModel : ViewModel() {
 
@@ -18,10 +19,10 @@ class PlaceSearchViewModel : ViewModel() {
         Repository.searchPlaces(query)
     }
 
-    fun savePlace(place: Place) = Repository.savePlace(place)
-
     fun searchPlaces(query: String) {
         searchLiveData.value = query
     }
+
+    fun savePlace(place: Places) = Repository.savePlace(place)
 
 }

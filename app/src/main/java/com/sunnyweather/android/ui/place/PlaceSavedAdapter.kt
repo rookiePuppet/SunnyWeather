@@ -1,5 +1,7 @@
 package com.sunnyweather.android.ui.place
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +12,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.sunnyweather.android.R
 import com.sunnyweather.android.logic.model.Place
+import com.sunnyweather.android.logic.model.Places
 
-class PlaceSavedAdapter(val placeList: ArrayList<Place>, private val activity: PlaceManageActivity) :
+class PlaceSavedAdapter(val placeList: ArrayList<Places>, private val activity: PlaceManageActivity) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     inner class ViewHolderForManage(view: View) : RecyclerView.ViewHolder(view) {
@@ -24,6 +27,14 @@ class PlaceSavedAdapter(val placeList: ArrayList<Place>, private val activity: P
         val savedPlaceName: TextView = view.findViewById(R.id.savedPlaceName)
         val deleteBtn: Button = view.findViewById(R.id.deleteBtn)
         val sortImage: ImageView = view.findViewById(R.id.sortImage)
+    }
+
+    fun refreshPlaceList() {
+        placeList.apply {
+            clear()
+            addAll(activity.placeSavedViewModel.getSavedPlace())
+        }
+        notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int): Int =
@@ -55,13 +66,20 @@ class PlaceSavedAdapter(val placeList: ArrayList<Place>, private val activity: P
                     activity.statusViewModel.transformStatus()
                     true
                 }
+                holder.itemView.setOnClickListener {
+                    val intent = Intent().putExtra("position", position)
+                    activity.setResult(RESULT_OK, intent)
+                    activity.finish()
+                }
             }
             is ViewHolderForEdit -> {
                 holder.savedPlaceName.text = placeList[position].name
                 holder.deleteBtn.visibility = View.VISIBLE
                 holder.sortImage.visibility = View.VISIBLE
                 holder.deleteBtn.setOnClickListener {
-                    Toast.makeText(activity, "你删除了${placeList[position].name}", Toast.LENGTH_SHORT).show()
+                    activity.placeSavedViewModel.deletedPlaceList.add(placeList[position])
+                    activity.placeSavedViewModel.deletedPositionList.add(position)
+                    activity.placeSavedViewModel.deletePlace(placeList[position].name)
                     activity.placeSavedViewModel.placeList.value?.removeAt(position)
                     notifyDataSetChanged()
                 }

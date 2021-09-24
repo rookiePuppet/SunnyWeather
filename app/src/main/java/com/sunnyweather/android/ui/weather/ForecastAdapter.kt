@@ -1,5 +1,6 @@
 package com.sunnyweather.android.ui.weather
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,7 @@ class ForecastAdapter(private val daily: DailyResponse.Daily) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val skycon = daily.skycon[position]
         val simpleDateFormat = SimpleDateFormat("MM-dd", Locale.getDefault())
-        holder.dateInfo.text = simpleDateFormat.format(skycon.date)
+        holder.dateInfo.text = transformDate(simpleDateFormat.format(skycon.date))
         holder.skyInfo.text = getSky(skycon.value).info
         holder.skyIcon.setImageResource(getSky(skycon.value).icon)
         val temperature = daily.temperature[position]
@@ -39,5 +40,36 @@ class ForecastAdapter(private val daily: DailyResponse.Daily) :
 
     override fun getItemCount(): Int = daily.skycon.size
 
+    private fun transformDate(target: String) : String{
+        val day = 24*60*60*1000L
+        val simpleDateFormat = SimpleDateFormat("MM-dd", Locale.getDefault())
+        val calendar = Calendar.getInstance()
+        val nowTime = simpleDateFormat.format(Date(System.currentTimeMillis()))
+        val today = simpleDateFormat.parse(nowTime)
+        val target = simpleDateFormat.parse(target)
+        Log.d("WeatherActivity", "${today.time - target.time}")
+        val result = when(today.time - target.time) {
+            0L -> "今天"
+            -day -> "明天"
+            -2*day -> "后天"
+            else -> {
+                calendar.time = Date(target.time)
+                getWeek(calendar.get(Calendar.DAY_OF_WEEK))
+            }
+        }
+        return result
+    }
+
+    private fun getWeek(week: Int) : String =
+        when(week) {
+            Calendar.SUNDAY -> "周日"
+            Calendar.MONDAY -> "周一"
+            Calendar.TUESDAY -> "周二"
+            Calendar.WEDNESDAY -> "周三"
+            Calendar.THURSDAY -> "周四"
+            Calendar.FRIDAY -> "周五"
+            Calendar.SATURDAY -> "周六"
+            else -> ""
+        }
 
 }

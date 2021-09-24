@@ -1,30 +1,27 @@
 package com.sunnyweather.android.ui.place
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sunnyweather.android.R
-import com.sunnyweather.android.logic.dao.PlaceDao
-import com.sunnyweather.android.logic.model.Place
 import com.sunnyweather.android.ui.place.StatusViewModel.Companion.STATUS_MANAGE
 
 class PlaceManageActivity : AppCompatActivity() {
 
-    val statusViewModel by lazy { ViewModelProvider(this,
-        StatusViewModelFactory(placeSavedAdapter)).get(StatusViewModel::class.java) }
+    val statusViewModel by lazy { ViewModelProvider(this, StatusViewModelFactory(placeSavedAdapter)).get(StatusViewModel::class.java) }
 
     val placeSavedViewModel: PlaceSavedViewModel by viewModels()
 
@@ -38,13 +35,6 @@ class PlaceManageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_manage)
-        supportFragmentManager.setFragmentResultListener("requestKey",
-            this) { _, bundle ->
-            val hadAddedPlace = bundle.getInt("hadAddedPlace")
-            if (hadAddedPlace == 1) {
-                placeSavedAdapter.notifyDataSetChanged()
-            }
-        }
         /*设置Toolbar*/
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -67,8 +57,11 @@ class PlaceManageActivity : AppCompatActivity() {
             override fun onDrawerClosed(drawerView: View) {
                 val manager = getSystemService(INPUT_METHOD_SERVICE) as
                         InputMethodManager
-                manager.hideSoftInputFromWindow(drawerView.windowToken,
-                     InputMethodManager.HIDE_NOT_ALWAYS)
+                manager.hideSoftInputFromWindow(
+                    drawerView.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS
+                )
+                placeSavedAdapter.refreshPlaceList()
             }
 
             override fun onDrawerStateChanged(newState: Int) {}
@@ -91,10 +84,6 @@ class PlaceManageActivity : AppCompatActivity() {
                 check?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             }
         }
-        /*更新列表*/
-        placeSavedViewModel.placeList.observe(this) {
-            placeSavedAdapter.notifyDataSetChanged()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -109,19 +98,35 @@ class PlaceManageActivity : AppCompatActivity() {
                 if (statusViewModel.statusLiveData.value == STATUS_MANAGE) {
                     finish()
                 } else {
+                    placeSavedAdapter.apply {
+                        placeList.clear()
+                        placeList.addAll(placeSavedViewModel.getSavedPlace())
+                        notifyDataSetChanged()
+                    }
+                    placeSavedViewModel.deletedPlaceList.clear()
+                    placeSavedViewModel.deletedPositionList.clear()
                     statusViewModel.transformStatus()
                     //取消更改
                 }
             }
             R.id.check -> {
-                placeSavedViewModel.clearPlace()
-                for (place in placeSavedViewModel.placeList.value!!) {
-                    placeSavedViewModel.savePlace(place)
+                if (placeSavedViewModel.deletedPlaceList.isNotEmpty()) {
+                    val deletedPlace = StringBuilder().apply {
+                        for (place in placeSavedViewModel.deletedPlaceList) {
+                            append(place.name)
+                            append("，")
+                        }
+                        deleteCharAt(this.lastIndex)
+                    }
+                    Toast.makeText(this, "你删除了$deletedPlace", Toast.LENGTH_SHORT).show()
+                    Log.d("SunnyWeather", placeSavedViewModel.deletedPositionList.toString())
+                    val intent = Intent().putIntegerArrayListExtra("deleteInfo", placeSavedViewModel.deletedPositionList)
+                    setResult(RESULT_OK, intent)
+
                 }
                 statusViewModel.transformStatus()
                 //保存更改
             }
-
         }
         return true
     }

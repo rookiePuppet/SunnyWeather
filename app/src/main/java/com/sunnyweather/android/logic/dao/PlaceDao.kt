@@ -1,53 +1,61 @@
 package com.sunnyweather.android.logic.dao
 
-import android.content.Context
-import androidx.core.content.edit
-import com.google.gson.Gson
+import android.annotation.SuppressLint
+import android.content.ContentValues
 import com.sunnyweather.android.SunnyWeatherApplication
-import com.sunnyweather.android.logic.model.Place
+import com.sunnyweather.android.logic.model.Places
+import kotlin.collections.ArrayList as ArrayList
 
 object PlaceDao {
 
-    fun savePlace(place: Place) {
-        sharedPreferences().edit {
-            putString("place_" + place.name, Gson().toJson(place))
+    private val db = SunnyWeatherApplication.dbHelper.writableDatabase
+
+    fun savePlace(place: Places) {
+        val values = ContentValues().apply {
+            put("name", place.name)
+            put("lng", place.lng)
+            put("lat", place.lat)
         }
+        db.insert("Place", null, values)
     }
 
-    fun clearPlace() {
-        if (isPlaceSaved()) {
-            sharedPreferences().edit().clear().apply()
+    @SuppressLint("Range")
+    fun isPlaceSaved(place: Places): Boolean {
+        var isPlaceSaved = false
+        val cursor = db.query("Place", null, null, null, null, null, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val name = cursor.getString(cursor.getColumnIndex("name"))
+                if (name == place.name) {
+                    isPlaceSaved = true
+                    break
+                }
+            } while (cursor.moveToNext())
         }
+        cursor.close()
+        return isPlaceSaved
     }
 
-    fun getSavedPlaceNum(): Int = sharedPreferences().all.size
-
-    fun getSavedPlace(): ArrayList<Place> {
-        val placeList = ArrayList<Place>()
-        val placeJson = sharedPreferences().all
-        placeJson.entries.forEach {
-            val place = Gson().fromJson(it.value.toString(), Place::class.java)
-            placeList.add(place)
+    @SuppressLint("Range")
+    fun getSavedPlace(): ArrayList<Places> {
+        val placeList = ArrayList<Places>()
+        val cursor = db.query("Place", null, null, null, null, null, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val name = cursor.getString(cursor.getColumnIndex("name"))
+                val lng = cursor.getString(cursor.getColumnIndex("lng"))
+                val lat = cursor.getString(cursor.getColumnIndex("lat"))
+                val place = Places(name, lng, lat)
+                placeList.add(place)
+            } while (cursor.moveToNext())
         }
+        cursor.close()
         return placeList
     }
 
-    fun getSavedPlace(index: Int): Place {
-        val placeJson = sharedPreferences().all.toList()
-        return Gson().fromJson(placeJson[index].toString(), Place::class.java)
+    fun deletePlace(placeName: String) {
+        db.delete("Place", "name = ?", arrayOf(placeName))
     }
 
-    fun isPlaceSaved() = sharedPreferences().all.isNotEmpty()
-
-    fun deletePlace(placeName: String) : Boolean{
-        if(sharedPreferences().contains("place_${placeName}")) {
-            sharedPreferences().edit().remove(placeName).apply()
-            return true
-        }
-        return false
-    }
-
-    private fun sharedPreferences() = SunnyWeatherApplication.context.
-            getSharedPreferences("sunny_weather", Context.MODE_PRIVATE)
 
 }

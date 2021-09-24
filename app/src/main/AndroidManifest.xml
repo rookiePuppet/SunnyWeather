@@ -8,12 +8,14 @@
         android:name=".SunnyWeatherApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SunnyWeather">
         <activity
-            android:name=".ui.place.PlaceEditActivity"
+            android:name=".ui.diary.DiaryEditActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.diary.DiaryActivity"
             android:exported="true" />
         <activity
             android:name=".ui.place.PlaceManageActivity"
