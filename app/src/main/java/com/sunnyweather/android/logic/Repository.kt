@@ -3,15 +3,12 @@ package com.sunnyweather.android.logic
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import androidx.lifecycle.liveData
-import com.sunnyweather.android.SunnyWeatherApplication
 import com.sunnyweather.android.logic.dao.DiaryDao
 import com.sunnyweather.android.logic.dao.PlaceDao
-import com.sunnyweather.android.logic.model.Diary
-import com.sunnyweather.android.logic.model.Place
-import com.sunnyweather.android.logic.model.Places
-import com.sunnyweather.android.logic.model.Weather
+import com.sunnyweather.android.logic.dao.PostDao
+import com.sunnyweather.android.logic.dao.UserDao
+import com.sunnyweather.android.logic.model.*
 import com.sunnyweather.android.logic.network.SunnyWeatherNetwork
-import com.sunnyweather.android.ui.diary.DiaryEditActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -19,6 +16,42 @@ import java.lang.RuntimeException
 import kotlin.coroutines.CoroutineContext
 
 object Repository {
+
+    /*Post*/
+    fun savePost(post: Post) = PostDao.savePost(post)
+
+    fun searchPostByKey(key: Int): Post? = PostDao.searchPostByKey(key)
+
+    fun searchPostByTitle(title: String) = PostDao.searchPostByTitle(title)
+
+    fun deletePostByKey(key: Int) = PostDao.deletePostByKey(key)
+
+    fun getSavedPost() = PostDao.getSavedPost()
+
+    fun isKeyExisted(key: Int) = PostDao.isKeyExisted(key)
+
+    fun clearAllPost() = PostDao.clearAllPost()
+
+    /*User*/
+    fun saveUser(user: User) = UserDao.saveUser(user)
+
+    fun addPublished(userPN: String, postKey: Int) = UserDao.addPublished(userPN, postKey)
+
+    fun removePublished(userPN: String, postKey: Int) = UserDao.removePublished(userPN, postKey)
+
+    fun deleteUserByPhoneNumber(pn: String) = UserDao.deleteUserByPhoneNumber(pn)
+
+    fun searchUserByPhoneNumber(pn: String) = UserDao.searchUserByPhoneNumber(pn)
+
+    fun addLiked(userPN: String, postKey: Int) = UserDao.addLiked(userPN, postKey)
+
+    fun addStared(userPN: String, postKey: Int) = UserDao.addStared(userPN, postKey)
+
+    fun removeLiked(userPN: String, postKey: Int) = UserDao.removeLiked(userPN, postKey)
+
+    fun removeStared(userPN: String, postKey: Int) = UserDao.removeStared(userPN, postKey)
+
+    fun clearAllUser() = UserDao.clearAllUser()
 
     /*Diary*/
     fun saveDiary(diary: Diary) = DiaryDao.saveDiary(diary)
@@ -30,6 +63,8 @@ object Repository {
     fun deleteDiary(date: String) = DiaryDao.deleteDiary(date)
 
     fun getSavedDiary(): ArrayList<Diary> = DiaryDao.getSavedDiary()
+
+    fun clearAllDiary() = DiaryDao.clearAllDiary()
 
     /*Place*/
     fun savePlace(place: Places) = PlaceDao.savePlace(place)
@@ -49,6 +84,8 @@ object Repository {
             Result.failure(RuntimeException("response status is ${placeResponse.status}"))
         }
     }
+
+    fun clearAllPlace() = PlaceDao.clearAllPlace()
 
     /*Weather*/
     fun refreshWeather(lng: String, lat: String) = fire(Dispatchers.IO) {

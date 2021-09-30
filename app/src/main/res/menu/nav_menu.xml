@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navPublishedPost"
+            android:icon="@drawable/ic_file_24"
+            android:title="我发布的帖子" />
+        <item
+            android:id="@+id/navLikedPost"
+            android:icon="@drawable/ic_thumb_up_24_normal"
+            android:title="我点赞的帖子" />
+        <item
+            android:id="@+id/navStaredPost"
+            android:icon="@drawable/ic_star_24_normal"
+            android:title="我收藏的帖子" />
+        <item
+            android:id="@+id/navSettings"
+            android:icon="@drawable/ic_settings_24"
+            android:title="设置" />
+    </group>
+    <group >
+        <item
+            android:id="@+id/navExitLogin"
+            android:checked="true"
+            android:title="退出登录"
+            app:showAsAction="always" />
+    </group>
+</menu>

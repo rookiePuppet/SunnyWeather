@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.sunnyweather.android.R
 import com.sunnyweather.android.ui.place.StatusViewModel.Companion.STATUS_MANAGE
 
@@ -65,7 +66,6 @@ class PlaceManageActivity : AppCompatActivity() {
             }
 
             override fun onDrawerStateChanged(newState: Int) {}
-
         })
         /*配置FloatingActionButton*/
         floatingActionButton = findViewById(R.id.floatingActionButton)
@@ -84,6 +84,7 @@ class PlaceManageActivity : AppCompatActivity() {
                 check?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             }
         }
+        Snackbar.make(floatingActionButton, "点击加号按钮以添加城市", Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

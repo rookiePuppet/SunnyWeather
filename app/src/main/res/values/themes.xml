@@ -14,9 +14,4 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.Dialog.Custom" parent="Theme.MaterialComponents.Dialog">
-        <item name="windowNoTitle">true</item>
-       <!-- <item name="android:windowIsTranslucent">true</item>-->
-    </style>
-
 </resources>

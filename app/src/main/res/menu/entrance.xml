@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/placeManage"
+        android:title="管理城市"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/diaryManage"
+        android:title="日记"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/forum"
+        android:title="论坛"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/admin"
+        android:title="管理员"
+        app:showAsAction="always"/>
+</menu>

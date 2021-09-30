@@ -10,28 +10,45 @@
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/drawable/ic_check.xml" value="0.23981481481481481" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/drawable/ic_close.xml" value="0.24351851851851852" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/drawable/ic_delete.xml" value="0.23981481481481481" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/drawable/ic_star_24_normal.xml" value="0.1986111111111111" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/drawable/input_edit_style.xml" value="0.23796296296296296" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/drawable/post_recyclerview_button_shape.xml" value="0.17083333333333334" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_admin.xml" value="0.18271857923497267" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_diary.xml" value="0.2028985507246377" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_diary_edit.xml" value="0.20516304347826086" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_forum(backup).xml" value="0.13900273224043716" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_forum.xml" value="0.20168066580377575" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_login.xml" value="0.20168066580377575" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_main.xml" value="0.26621847886098404" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_place.xml" value="0.1766304347826087" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_place_edit.xml" value="0.213768115942029" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_place_manage.xml" value="0.20168066580377575" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_post_detail.xml" value="0.20168066580377575" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_post_edit.xml" value="0.13558743169398907" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_register.xml" value="0.2006340579710145" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_specific_post.xml" value="0.20168066580377575" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/activity_weather.xml" value="0.21739130434782608" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/air_quality.xml" value="0.4033613316075515" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/diary_item.xml" value="0.20516304347826086" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/forecast.xml" value="0.4033613316075515" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/forecast_item.xml" value="0.4033613316075515" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/forum_item.xml" value="0.26621847886098404" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/fragment_place.xml" value="0.26621847886098404" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/fragment_place_search.xml" value="0.2056159420289855" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/fragment_weather.xml" value="0.18885869565217392" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/life_index.xml" value="0.4033613316075515" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/nav_header.xml" value="0.18271857923497267" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/now.xml" value="0.26621847886098404" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/place_edit_item.xml" value="0.20380434782608695" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/place_item.xml" value="0.20516304347826086" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/place_manage_item.xml" value="0.20380434782608695" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/place_saved_item.xml" value="0.21829710144927536" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/place_search_item.xml" value="0.21829710144927536" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/layout/specific_post_item.xml" value="0.26621847886098404" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/menu/bottom_app_bar.xml" value="0.278125" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/menu/entrance.xml" value="0.20859375" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/menu/forum_toolbar_menu.xml" value="0.20859375" />
+        <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/menu/nav_menu.xml" value="0.20859375" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/menu/toolbar.xml" value="0.278125" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.23425925925925925" />
         <entry key="..\:/Developer_Tools/MyProject/Android/SunnyWeather/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.23425925925925925" />

@@ -57,5 +57,9 @@ object PlaceDao {
         db.delete("Place", "name = ?", arrayOf(placeName))
     }
 
+    fun clearAllPlace() {
+        db.execSQL("delete from Place")
+    }
+
 
 }
